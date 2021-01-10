@@ -70,6 +70,9 @@ namespace Panelak.DataTable
                     Caption = c.Caption
                 }),
                 Data = tableData,
+                AllowTabs = options.AllowTabs,
+                NoTabs = config.Tabs.Count == 0,
+                Tabs = config.Tabs.Values.ToList(),
                 IsEmpty = !data.Any(),
                 FilteredCount = filteredCount,
                 CurrentPage = currentPage,

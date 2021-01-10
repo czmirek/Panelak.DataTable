@@ -29,7 +29,8 @@ namespace Panelak.DataTable
                 Language = placement.Language,
                 CurrentUrl = currentUri,
                 CurrentPage = keys.TryGetPage(request),
-                SetUrl = setUri
+                SetUrl = setUri,
+                Mode = keys.TryGetMode()
             };
         }
     }

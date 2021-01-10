@@ -22,18 +22,15 @@ namespace Panelak.DataTable
             handleBars.RegisterHelper("set_page_link", (writer, context, parameters) =>
             {
                 int page = parameters.At<int>(0);
-
-                var newParams = QueryHelpers.ParseQuery(uri.Query);
-                if (!newParams.ContainsKey(urlQueryKeys.PageKey))
-                    newParams.Add(urlQueryKeys.PageKey, page.ToString());
-                else
-                    newParams[urlQueryKeys.PageKey] = page.ToString();
-
-                string newUri = new UriBuilder(vm.CurrentUrl) { Query = "" }.Uri.ToString();
-                string fullUrl = QueryHelpers.AddQueryString(newUri, newParams);
+                string fullUrl = uri.AddOrUpdateQueryValue(urlQueryKeys.PageKey, page.ToString());
                 writer.WriteSafeString(fullUrl);
             });
 
+            handleBars.RegisterHelper("list_tabs_link", (writer, context, parameters) =>
+            {
+                string fullUrl = uri.AddOrUpdateQueryValue(urlQueryKeys.ModeKey, "tablist");
+                writer.WriteSafeString(fullUrl);
+            });
             handleBars.RegisterTemplate("Pagination", paginationTemplate);
             return handleBars.Compile(tableTemplate)(vm);
         }

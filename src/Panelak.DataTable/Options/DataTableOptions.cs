@@ -16,6 +16,7 @@ namespace Panelak.DataTable
         public Language Language { get; init; }
         public Uri CurrentUrl { get; init; }
         public Uri SetUrl { get; init; }
+        public DataTableMode Mode { get; init; }
         
         public int CurrentPage { get; init; }
         public Guid? ActiveTabId { get; init; }

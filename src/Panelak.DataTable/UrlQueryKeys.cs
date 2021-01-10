@@ -1,11 +1,17 @@
 ﻿using Microsoft.AspNetCore.Http;
+using System;
 
 namespace Panelak.DataTable
 {
     internal class UrlQueryKeys
     {
-        public string Prefix { get; set; } = "dt_";
-        public string PageKey { get; } = "page";
+        public UrlQueryKeys(string prefix = "dt_")
+        {
+            Prefix = prefix;
+        }
+        public string Prefix { get; set; };
+        public string PageKey { get; } = $"{Prefix}page";
+        public string ModeKey { get; } = $"{Prefix}mode";
 
         public int TryGetPage(HttpRequest request) => TryGetInt(request, PageKey, 1);
 
@@ -15,6 +21,11 @@ namespace Panelak.DataTable
                 return value;
 
             return defaultValue;
+        }
+
+        public DataTableMode TryGetMode()
+        {
+            if(RequestDelegate.)
         }
     }
 }

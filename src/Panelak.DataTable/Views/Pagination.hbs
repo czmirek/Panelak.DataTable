@@ -1,11 +1,9 @@
 ﻿<nav class="text-center float-none float-sm-left">
     <ul class="pagination pagination-circle pg-blue m-0 {{PaginationCustomCssClass}}">
         <li class="page-item {{#if CurrentPageIsFirst}}disabled{{/if}}">
-            {{!@(Url.Action<ListPageController>(a=>a.ApplyPage(Model.ListPageIdentifier,1)) + Html.GetTabsUrlParameters())}}
             <a class="page-link" href="{{set_page_link FirstPage}}">První</a>
         </li>
         <li class="page-item {{#if CurrentPageIsFirst}}disabled{{/if}}">
-            {{!@(Url.Action<ListPageController>(a=>a.ApplyPage(Model.ListPageIdentifier,Model.CurrentPage - 1)) + Html.GetTabsUrlParameters())}}
             <a class="page-link" href="{{set_page_link PreviousPage}}">
                 <span>&laquo;</span>
                 <span class="sr-only">Předchozí</span>
@@ -14,17 +12,14 @@
 
         {{#each PreviousPages}}
             <li class="page-item">
-                {{!@(Url.Action<ListPageController>(a=>a.ApplyPage(Model.ListPageIdentifier,i))+ Html.GetTabsUrlParameters())}}
                 <a class="page-link" href="{{set_page_link this}}">{{this}}</a>
             </li>
         {{/each}}
         <li class="page-item active">
-            {{!@(Url.Action<ListPageController>(a=>a.ApplyPage(Model.ListPageIdentifier,Model.CurrentPage))+ Html.GetTabsUrlParameters())}}
             <a class="page-link" href="{{set_page_link CurrentPage}}">{{CurrentPage}}</a>
         </li>
         {{#each NextPages}}
             <li class="page-item">
-                {{!@(Url.Action<ListPageController>(a=>a.ApplyPage(Model.ListPageIdentifier,i))+ Html.GetTabsUrlParameters())}}
                 <a class="page-link" href="{{set_page_link this}}">{{this}}</a>
             </li>
         {{/each}}

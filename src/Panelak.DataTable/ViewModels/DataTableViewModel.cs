@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Panelak.DataTable
 {
@@ -22,5 +23,8 @@ namespace Panelak.DataTable
         public int LastPage { get; init; }
         public string UserId { get; init; }
         public string Identifier { get; init; }
+        public bool AllowTabs { get; init; }
+        public bool NoTabs { get; init; }
+        public List<DataTableTabConfig> Tabs { get; init; }
     }
 }
