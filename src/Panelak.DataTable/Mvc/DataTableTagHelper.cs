@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace Panelak.DataTable
 {
     [HtmlTargetElement("datatable", TagStructure = TagStructure.NormalOrSelfClosing)]
-    public class DataTableTagHelper : TagHelper
+    public class DataTableTagHelper : TagHelper, IDataTablePlacement
     {
         public string Identifier { get; set; }
         public string UserId { get; set; }
@@ -31,11 +31,14 @@ namespace Panelak.DataTable
             output.TagMode = TagMode.StartTagAndEndTag;
             output.TagName = "div";
 
-            DataTableTagHelperExceptionWrapper wrapper = new DataTableTagHelperExceptionWrapper(this, Debug);
-            string htmlOutput = await wrapper.GetOutputAsync();
+            var wrapper = ViewContext.HttpContext.RequestServices.GetService(typeof(DataTableTagHelperExceptionWrapper)) as DataTableTagHelperExceptionWrapper;
+            string htmlOutput = await wrapper.GetOutputAsync(this, Debug);
 
             output.Content.Clear();
             output.Content.AppendHtml(htmlOutput);
         }
+
+        IEnumerable<IDataTableColumn> IDataTablePlacement.Columns => Columns;
+        IEnumerable<IDataTableFilter> IDataTablePlacement.Filters => Filters;
     }
 }

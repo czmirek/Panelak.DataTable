@@ -14,10 +14,12 @@ namespace Panelak.DataTable
 {
     internal class DataTable
     {
+        private readonly DataTableConfig config;
         private readonly DataTableOptions options;
 
-        public DataTable(DataTableOptions options)
+        public DataTable(DataTableConfig config, DataTableOptions options)
         {
+            this.config = config ?? throw new ArgumentNullException(nameof(config));
             this.options = options ?? throw new System.ArgumentNullException(nameof(options));
         }
 
@@ -31,8 +33,8 @@ namespace Panelak.DataTable
             int unfilteredCount = await unfilteredCountQuery.FirstAsync<int>();
             int filteredCount = await filteredCountQuery.FirstAsync<int>();
 
-            int currentPage = options.Page;
-            int numberOfPages = (int)Math.Ceiling((double)unfilteredCount / options.RowsPerPage);
+            int currentPage = config.CurrentPage;
+            int numberOfPages = (int)Math.Ceiling((double)unfilteredCount / config.RowsPerPage);
 
             List<int> previousPages = new List<int>();
             for (int i = currentPage - 2; i < currentPage; i++)

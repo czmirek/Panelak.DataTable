@@ -5,20 +5,20 @@ namespace Panelak.DataTable
 {
     internal class DataTableTagHelperExceptionWrapper
     {
-        private readonly DataTableTagHelper tagHelper;
-        private readonly bool debug;
+        private readonly IDataTableOptionsProvider optionsProvider;
+        private readonly IDataTableRepository db;
 
-        public DataTableTagHelperExceptionWrapper(DataTableTagHelper tagHelper, bool debug = false)
+        public DataTableTagHelperExceptionWrapper(IDataTableOptionsProvider options, IDataTableRepository db)
         {
-            this.tagHelper = tagHelper;
-            this.debug = debug;
+            this.optionsProvider = options ?? throw new ArgumentNullException(nameof(options));
+            this.db = db ?? throw new ArgumentNullException(nameof(db));
         }
 
-        internal async Task<string> GetOutputAsync()
+        internal async Task<string> GetOutputAsync(DataTableTagHelper tagHelper, bool debug = false)
         {
             try
             {
-                return await GetOutputPrivateAsync();
+                return await GetOutputPrivateAsync(tagHelper);
             } 
             catch (Exception e)
             {
@@ -40,14 +40,12 @@ namespace Panelak.DataTable
             }
         }
 
-        private async Task<string> GetOutputPrivateAsync()
+        private async Task<string> GetOutputPrivateAsync(DataTableTagHelper tagHelper)
         {
-            IDataTableOptionsProvider provider = new QueryParametersProvider(tagHelper);
-            DataTableOptions options = provider.GetRequestParametersModel();
+            DataTableConfig config = await db.GetTableConfigAsync(tagHelper.Table, tagHelper.UserId);
+            DataTableOptions options = optionsProvider.GetOptions(tagHelper.ViewContext.HttpContext.Request, tagHelper);
 
-            IDataTableRepository db = tagHelper.ViewContext.HttpContext.RequestServices.GetService(typeof(IDataTableRepository)) as IDataTableRepository;
-
-            DataTable dataTable = new DataTable(options);
+            DataTable dataTable = new DataTable(config, options);
             return await dataTable.RenderAsync();
         }
     }

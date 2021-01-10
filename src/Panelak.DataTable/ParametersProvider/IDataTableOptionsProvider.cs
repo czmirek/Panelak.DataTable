@@ -1,7 +1,9 @@
-﻿namespace Panelak.DataTable
+﻿using Microsoft.AspNetCore.Http;
+
+namespace Panelak.DataTable
 {
     internal interface IDataTableOptionsProvider
     {
-        DataTableOptions GetRequestParametersModel();
+        DataTableOptions GetOptions(HttpRequest request, IDataTablePlacement placement);
     }
 }

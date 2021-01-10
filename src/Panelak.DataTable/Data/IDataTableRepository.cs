@@ -1,11 +1,10 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 namespace Panelak.DataTable
 {
     internal interface IDataTableRepository
     {
-        Task<DataTableConfig> GetTableConfigAsync(Guid userId);
+        Task<DataTableConfig> GetTableConfigAsync(string table, string userId);
         
         Task SetPageAsync(string table, string userId, int page);
     }

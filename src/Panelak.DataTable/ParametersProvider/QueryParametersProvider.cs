@@ -7,19 +7,14 @@ namespace Panelak.DataTable
     internal class QueryParametersProvider : IDataTableOptionsProvider
     {
         public const string DefaultKeyPrefix = "dt_";
-        
-        private readonly string prefix;
-        private readonly DataTableTagHelper tagHelper;
 
-        public QueryParametersProvider(DataTableTagHelper tagHelper)
+        public QueryParametersProvider()
         {
-            prefix = tagHelper.RequestPrefix ?? DefaultKeyPrefix;
-            this.tagHelper = tagHelper ?? throw new System.ArgumentNullException(nameof(tagHelper));
         }
 
-        public DataTableOptions GetRequestParametersModel()
+        public DataTableOptions GetOptions(HttpRequest request, IDataTablePlacement placement)
         {
-            Uri currentUri = new Uri(Microsoft.AspNetCore.Http.Extensions.UriHelper.GetDisplayUrl(tagHelper.ViewContext.HttpContext.Request));
+            Uri currentUri = new Uri(Microsoft.AspNetCore.Http.Extensions.UriHelper.GetDisplayUrl(request));
             UriBuilder uriBuilder = new UriBuilder(currentUri)
             {
                 Path = DataTableRouter.PostPath,
@@ -30,12 +25,13 @@ namespace Panelak.DataTable
             
             return new DataTableOptions
             {
-                Table = tagHelper.Table,
-                Columns = tagHelper.Columns,
-                Filters = tagHelper.Filters,
-                AllowTabs = tagHelper.AllowTabs,
-                DbConnection = tagHelper.SourceConnection,
-                Language = tagHelper.Language,
+                Identifier = placement.Identifier,
+                Table = placement.Table,
+                Columns = placement.Columns,
+                Filters = placement.Filters,
+                AllowTabs = placement.AllowTabs,
+                DbConnection = placement.SourceConnection,
+                Language = placement.Language,
                 CurrentUrl = currentUri,
                 SetUrl = setUri
             };

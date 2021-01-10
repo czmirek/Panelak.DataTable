@@ -12,5 +12,6 @@ namespace Panelak.DataTable
         public string UserId { get; set; }
         public string TableIdentifier { get; set; }
         public int CurrentPage { get; set; }
+        public int RowsPerPage { get; set; }
     }
 }

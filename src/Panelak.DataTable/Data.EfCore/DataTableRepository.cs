@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Panelak.DataTable.Mvc;
-using System;
 using System.Threading.Tasks;
 
 namespace Panelak.DataTable
@@ -16,9 +15,17 @@ namespace Panelak.DataTable
             this.connectionString = connectionString;
         }
 
-        public async Task<DataTableConfig> GetTableConfigAsync(Guid userId)
+        public async Task<DataTableConfig> GetTableConfigAsync(string table, string userId)
         {
-            throw new NotImplementedException();
+            using var context = GetContext();
+            var configEntity = await GetOrCreateConfigRow(context, table, userId);
+            return new DataTableConfig
+            {
+                CurrentPage = configEntity.CurrentPage,
+                RowsPerPage = configEntity.RowsPerPage,
+                TableIdentifier = configEntity.TableIdentifier,
+                UserId = configEntity.UserId
+            };
         }
 
         public async Task SetPageAsync(string table, string userId, int page)
@@ -52,6 +59,7 @@ namespace Panelak.DataTable
                     CurrentPage = 1,
                     UserId = userId,
                     TableIdentifier = table,
+                    RowsPerPage = 10
                 };
                 context.Config.Add(configEntity);
                 await context.SaveChangesAsync();

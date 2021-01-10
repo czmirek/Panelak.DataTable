@@ -5,7 +5,7 @@ namespace Panelak.DataTable
 {
     public record DataTableConfig
     {
-        public Guid UserId { get; init; }
+        public string UserId { get; init; }
         public string TableIdentifier { get; init; }
 
         public IDictionary<Guid, DataTableTabConfig> Tabs { get; init; }
