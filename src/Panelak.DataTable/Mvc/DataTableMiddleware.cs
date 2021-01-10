@@ -35,15 +35,15 @@ namespace Panelak.DataTable
                 return;
             }
 
-            if (!query.ContainsKey("table"))
+            if (!query.ContainsKey("identifier"))
             {
                 httpContext.Response.StatusCode = 400;
-                await httpContext.Response.WriteAsync("Missing \"table\" parameter");
+                await httpContext.Response.WriteAsync("Missing \"identifier\" parameter");
                 return;
             }
 
             string operation = query["operation"];
-            string table = query["table"];
+            string identifier = query["identifier"];
             string returnUrl = query["returnUrl"];
             string userId = query["userId"];
 
@@ -55,7 +55,7 @@ namespace Panelak.DataTable
                         if (page < 1)
                             page = 1;
 
-                        await repo.SetPageAsync(table, userId, page);
+                        await repo.SetPageAsync(identifier, userId, page);
                         httpContext.Response.Redirect(returnUrl);
                         return;
                     }

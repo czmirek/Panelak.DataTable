@@ -25,6 +25,9 @@ namespace Panelak.DataTable.Migrations
                     b.Property<int>("CurrentPage")
                         .HasColumnType("INTEGER");
 
+                    b.Property<int>("RowsPerPage")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("TableIdentifier")
                         .HasColumnType("TEXT");
 

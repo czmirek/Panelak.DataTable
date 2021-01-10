@@ -14,7 +14,8 @@ namespace Panelak.DataTable.Migrations
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
                     UserId = table.Column<string>(type: "TEXT", nullable: true),
                     TableIdentifier = table.Column<string>(type: "TEXT", nullable: true),
-                    CurrentPage = table.Column<int>(type: "INTEGER", nullable: false)
+                    CurrentPage = table.Column<int>(type: "INTEGER", nullable: false),
+                    RowsPerPage = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {

@@ -20,7 +20,7 @@ namespace Panelak.DataTable
         public int PreviousPage { get; init; }
         public int NextPage { get; init; }
         public int LastPage { get; init; }
-        public string Table { get; internal set; }
-        public string UserId { get; internal set; }
+        public string UserId { get; init; }
+        public string Identifier { get; init; }
     }
 }

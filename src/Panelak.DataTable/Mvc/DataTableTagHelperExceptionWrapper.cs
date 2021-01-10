@@ -42,7 +42,7 @@ namespace Panelak.DataTable
 
         private async Task<string> GetOutputPrivateAsync(DataTableTagHelper tagHelper)
         {
-            DataTableConfig config = await db.GetTableConfigAsync(tagHelper.Table, tagHelper.UserId);
+            DataTableConfig config = await db.GetTableConfigAsync(tagHelper.Identifier, tagHelper.UserId);
             DataTableOptions options = optionsProvider.GetOptions(tagHelper.ViewContext.HttpContext.Request, tagHelper);
 
             DataTable dataTable = new DataTable(config, options);

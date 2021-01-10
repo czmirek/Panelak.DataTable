@@ -22,7 +22,7 @@ namespace Panelak.DataTable
                 int page = parameters.At<int>(0);
                 string fullUrl = QueryHelpers.AddQueryString(vm.SetUrl, new Dictionary<string, string>()
                 {
-                    { "table", vm.Table },
+                    { "identifier", vm.Identifier },
                     { "operation", "page"},
                     { "userId", vm.UserId },
                     { "page", page.ToString() },

@@ -1,16 +1,11 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System;
-using System.Collections.Generic;
 
 namespace Panelak.DataTable
 {
     internal class QueryParametersProvider : IDataTableOptionsProvider
     {
         public const string DefaultKeyPrefix = "dt_";
-
-        public QueryParametersProvider()
-        {
-        }
 
         public DataTableOptions GetOptions(HttpRequest request, IDataTablePlacement placement)
         {
@@ -27,6 +22,7 @@ namespace Panelak.DataTable
             {
                 Identifier = placement.Identifier,
                 Table = placement.Table,
+                UserId = placement.UserId,
                 Columns = placement.Columns,
                 Filters = placement.Filters,
                 AllowTabs = placement.AllowTabs,

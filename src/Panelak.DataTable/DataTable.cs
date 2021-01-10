@@ -56,7 +56,7 @@ namespace Panelak.DataTable
 
             var vm = new DataTableViewModel
             {
-                Table = options.Table,
+                Identifier = options.Identifier,
                 UserId = options.UserId,
                 Columns = options.Columns.Select(c => new ColumnViewModel
                 {
@@ -83,8 +83,6 @@ namespace Panelak.DataTable
             return renderer.Render(vm);
         }
 
-        
-
         private Query CreateDataQuery()
         {
             Query dataQuery = GetQuery();
@@ -96,7 +94,7 @@ namespace Panelak.DataTable
                     dataQuery = dataQuery.Select(sqlColumn.Column);
             }
 
-            dataQuery = dataQuery.ForPage(options.Page, options.RowsPerPage);
+            dataQuery = dataQuery.ForPage(config.CurrentPage, config.RowsPerPage);
             return dataQuery;
         }
 

@@ -9,7 +9,7 @@ namespace Panelak.DataTable
         private readonly string connectionString;
         private readonly RepositoryType repositoryType;
 
-        public DataTableDbContextRepository(RepositoryType repositoryType = RepositoryType.Sqlite, string connectionString = "datatable.db")
+        public DataTableDbContextRepository(RepositoryType repositoryType = RepositoryType.Sqlite, string connectionString = "Filename=panelak_datatable.db")
         {
             this.repositoryType = repositoryType;
             this.connectionString = connectionString;

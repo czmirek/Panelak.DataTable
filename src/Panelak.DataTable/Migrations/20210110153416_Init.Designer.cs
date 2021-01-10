@@ -9,7 +9,7 @@ using Panelak.DataTable.Mvc;
 namespace Panelak.DataTable.Migrations
 {
     [DbContext(typeof(DataTableSqliteContext))]
-    [Migration("20210110150133_Init")]
+    [Migration("20210110153416_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,6 +25,9 @@ namespace Panelak.DataTable.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<int>("CurrentPage")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("RowsPerPage")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("TableIdentifier")
