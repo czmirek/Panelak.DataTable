@@ -1,0 +1,39 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<datatable table="User"
+           user-id="testuser"
+           columns="@(new List<IDataTableColumn>()
+                    {
+                        new SqlColumn
+                        {
+                            Identifier = "id",
+                            Caption = "#",
+                            Column = "Id"
+                        },
+                        new SqlColumn
+                        {
+                            Identifier = "email",
+                            Caption = "Email",
+                            Column = "Email"
+                        },
+                        new SqlColumn
+                        {
+                            Identifier = "name",
+                            Caption = "Jméno",
+                            Column = "UserName"
+                        }
+                    })"
+           filters="@(new List<IDataTableFilter>
+                    {
+                        new TextBoxFilter
+                        {
+                            Caption = "email",
+                            Identifier = "email",
+                            OnApplyFx = (q,v)=>q.WhereLike("email", $"%{v}%")
+                        }
+                    })"
+           debug="true"
+           source-connection="@(new System.Data.SqlClient.SqlConnection("Server=.\\SQLEXPRESS;Database=test;Trusted_Connection=True;"))"
+           />
