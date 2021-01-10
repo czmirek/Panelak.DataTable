@@ -21,7 +21,7 @@ namespace Panelak.DataTable
         private static IServiceCollection AddPanelakDataTablePrivate(this IServiceCollection sc)
         {
             return sc.AddTransient<DataTableTagHelperExceptionWrapper>()
-                     .AddTransient<IDataTableOptionsProvider, QueryParametersProvider>();
+                     .AddTransient<IDataTableOptionsProvider, UrlQueryOptionsProvider>();
         }
     }
 }

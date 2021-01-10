@@ -9,10 +9,5 @@ namespace Panelak.DataTable
         public string TableIdentifier { get; init; }
 
         public IDictionary<Guid, DataTableTabConfig> Tabs { get; init; }
-        public Guid ActiveTabId { get; init; }
-
-        public int CurrentPage { get; init; }
-        public int RowsPerPage { get; init; }
-
     }
 }

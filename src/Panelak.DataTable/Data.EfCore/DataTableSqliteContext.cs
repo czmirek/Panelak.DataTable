@@ -1,9 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
 
 namespace Panelak.DataTable.Mvc
 {
-    public class DataTableSqliteContext : DataTableDbContext
+    internal class DataTableSqliteContext : DataTableDbContext
     {
         private readonly string connectionString;
 

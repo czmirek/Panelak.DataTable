@@ -3,12 +3,11 @@ using System;
 
 namespace Panelak.DataTable
 {
-    internal class QueryParametersProvider : IDataTableOptionsProvider
+    internal class UrlQueryOptionsProvider : IDataTableOptionsProvider
     {
-        public const string DefaultKeyPrefix = "dt_";
-
         public DataTableOptions GetOptions(HttpRequest request, IDataTablePlacement placement)
         {
+            var keys = new UrlQueryKeys();
             Uri currentUri = new Uri(Microsoft.AspNetCore.Http.Extensions.UriHelper.GetDisplayUrl(request));
             UriBuilder uriBuilder = new UriBuilder(currentUri)
             {
@@ -29,6 +28,7 @@ namespace Panelak.DataTable
                 DbConnection = placement.SourceConnection,
                 Language = placement.Language,
                 CurrentUrl = currentUri,
+                CurrentPage = keys.TryGetPage(request),
                 SetUrl = setUri
             };
         }

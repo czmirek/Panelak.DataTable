@@ -3,7 +3,7 @@ using System;
 
 namespace Panelak.DataTable.Mvc
 {
-    public class DataTableSqlServerContext : DataTableDbContext
+    internal class DataTableSqlServerContext : DataTableDbContext
     {
         private readonly string connectionString;
 

@@ -16,9 +16,12 @@ namespace Panelak.DataTable
 
         internal async Task<string> GetOutputAsync(DataTableTagHelper tagHelper, bool debug = false)
         {
+#if DEBUG
+            return await GetOutputPrivateAsync(tagHelper);
+#else
             try
             {
-                return await GetOutputPrivateAsync(tagHelper);
+                return await GetOutputPrivateAsync(tagHelper);           
             } 
             catch (Exception e)
             {
@@ -38,6 +41,7 @@ namespace Panelak.DataTable
 </div>";
                 
             }
+#endif
         }
 
         private async Task<string> GetOutputPrivateAsync(DataTableTagHelper tagHelper)

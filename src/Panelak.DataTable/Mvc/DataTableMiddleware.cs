@@ -49,23 +49,6 @@ namespace Panelak.DataTable
 
             switch (operation)
             {
-                case "page":
-                    if (query.ContainsKey("page") && int.TryParse(query["page"], out int page))
-                    {
-                        if (page < 1)
-                            page = 1;
-
-                        await repo.SetPageAsync(identifier, userId, page);
-                        httpContext.Response.Redirect(returnUrl);
-                        return;
-                    }
-                    else
-                    {
-                        httpContext.Response.StatusCode = 400;
-                        await httpContext.Response.WriteAsync($"Invalid value of parameter \"page\"");
-                    }
-                    
-                    break;
                 default:
                     httpContext.Response.StatusCode = 400;
                     await httpContext.Response.WriteAsync($"Invalid operation \"{operation}\"");

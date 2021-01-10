@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.30717.126
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Panelak.DataTable", "Panelak.DataTable\Panelak.DataTable.csproj", "{81FF5F82-279F-4B91-A8EA-C4ACF8452F6E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Panelak.DataTable.WebTest", "Panelak.DataTable.WebTest\Panelak.DataTable.WebTest.csproj", "{D9B0A715-0EAD-4B53-A6F6-0BEBEF6DB690}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Panelak.DataTable.WebTest", "Panelak.DataTable.WebTest\Panelak.DataTable.WebTest.csproj", "{D9B0A715-0EAD-4B53-A6F6-0BEBEF6DB690}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

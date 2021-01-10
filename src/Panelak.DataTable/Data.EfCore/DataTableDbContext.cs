@@ -2,8 +2,9 @@
 
 namespace Panelak.DataTable.Mvc
 {
-    public abstract class DataTableDbContext : DbContext
+    internal abstract class DataTableDbContext : DbContext
     {
         public DbSet<DataTableConfigEntity> Config { get; set; }
+        public DbSet<DataTableTabEntity> Tab { get; set; }
     }
 }

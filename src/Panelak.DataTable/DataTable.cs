@@ -16,6 +16,8 @@ namespace Panelak.DataTable
     {
         private readonly DataTableConfig config;
         private readonly DataTableOptions options;
+        private int rowsPerPage;
+        private int currentPage;
 
         public DataTable(DataTableConfig config, DataTableOptions options)
         {
@@ -26,6 +28,11 @@ namespace Panelak.DataTable
         public async Task<string> RenderAsync()
         {
             // prepare data
+            rowsPerPage = options.ActiveTabId.HasValue ? config.Tabs[options.ActiveTabId.Value].RowsPerPage : 10;
+            currentPage = options.CurrentPage;
+            if (currentPage < 1)
+                currentPage = 1;
+
             var query = CreateDataQuery();
             var unfilteredCountQuery = CreateFilteredCountQuery();
             var filteredCountQuery = CreateFilteredCountQuery();
@@ -33,8 +40,8 @@ namespace Panelak.DataTable
             int unfilteredCount = await unfilteredCountQuery.FirstAsync<int>();
             int filteredCount = await filteredCountQuery.FirstAsync<int>();
 
-            int currentPage = config.CurrentPage;
-            int numberOfPages = (int)Math.Ceiling((double)unfilteredCount / config.RowsPerPage);
+            
+            int numberOfPages = (int)Math.Ceiling((double)unfilteredCount / rowsPerPage);
 
             List<int> previousPages = new List<int>();
             for (int i = currentPage - 2; i < currentPage; i++)
@@ -94,7 +101,7 @@ namespace Panelak.DataTable
                     dataQuery = dataQuery.Select(sqlColumn.Column);
             }
 
-            dataQuery = dataQuery.ForPage(config.CurrentPage, config.RowsPerPage);
+            dataQuery = dataQuery.ForPage(options.CurrentPage, rowsPerPage);
             return dataQuery;
         }
 

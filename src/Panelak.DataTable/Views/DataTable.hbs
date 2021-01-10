@@ -1,39 +1,57 @@
-﻿<span class="badge badge-primary">Celkem řádků: {{ FilteredCount }}</span>
-<div class="card">
-    <div class="card-body table-responsive ">
-        {{#unless IsEmpty}}
-            <table class="table table-hover table-sm text-nowrap table-striped">
-                <thead class="thead-dark">
-                    {{#each Columns}}
-                        <th>{{this.Caption}}</th>
-                    {{/each}}
-                </thead>
-                <tbody>
-                    {{#each Data}}
-                        <tr>
-                            {{#each this}}
-                                <td>{{this}}</td>
+﻿<ul class="nav nav-tabs">
+  <li class="nav-item">
+    <a class="nav-link active" href="#">Active</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#">Link</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#">Link</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link disabled" href="#">Disabled</a>
+  </li>
+</ul>
+<div class="tab-content">
+    <div class="tab-pane show active">
+        <div class="card" style="border-top:none;border-radius:0;">
+            <div class="card-body table-responsive ">
+                <span class="badge badge-primary">Celkem řádků: {{ FilteredCount }}</span>
+                {{#unless IsEmpty}}
+                    <table class="table table-hover table-sm text-nowrap table-striped">
+                        <thead class="thead-dark">
+                            {{#each Columns}}
+                                <th>{{this.Caption}}</th>
                             {{/each}}
-                        </tr>
-                    {{/each}}
-                </tbody>
-            </table>
-        {{/unless}}
+                        </thead>
+                        <tbody>
+                            {{#each Data}}
+                                <tr>
+                                    {{#each this}}
+                                        <td>{{this}}</td>
+                                    {{/each}}
+                                </tr>
+                            {{/each}}
+                        </tbody>
+                    </table>
+                {{/unless}}
 
 
-        {{#if IsEmpty}}
-            <div class="alert alert-secondary m-0">
-                ⓘ Tabulka je prázdná
+                {{#if IsEmpty}}
+                    <div class="alert alert-secondary m-0">
+                        ⓘ Tabulka je prázdná
+                    </div>
+                {{/if}}
             </div>
-        {{/if}}
-    </div>
-    <div class="card-footer border-top bg-light">
-        <div class="row">
-            <div class="col-12">
-                <div class="form-inline d-inline">
-                    {{#unless IsEmpty}}
-                        {{> Pagination}}
-                    {{/unless}}
+            <div class="card-footer border-top bg-light">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-inline d-inline">
+                            {{#unless IsEmpty}}
+                                {{> Pagination}}
+                            {{/unless}}
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

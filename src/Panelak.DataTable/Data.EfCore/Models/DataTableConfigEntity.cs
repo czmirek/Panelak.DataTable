@@ -5,13 +5,14 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Panelak.DataTable
 {
     [Table("dtconfig")]
-    public class DataTableConfigEntity
+    internal class DataTableConfigEntity
     {
         [Key]
         public Guid Id { get; set; }
+        
+        public Guid? DefaultTabId { get; set; }
+
         public string UserId { get; set; }
-        public string TableIdentifier { get; set; }
-        public int CurrentPage { get; set; }
-        public int RowsPerPage { get; set; }
+        public string ViewIdentifier { get; set; }
     }
 }
