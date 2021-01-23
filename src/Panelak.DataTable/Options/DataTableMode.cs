@@ -3,6 +3,7 @@
     internal enum DataTableMode
     {
         Table,
-        TabList
+        TabList,
+        CreateTab
     }
 }

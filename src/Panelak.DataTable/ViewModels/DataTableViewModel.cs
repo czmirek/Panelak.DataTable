@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Panelak.DataTable
 {
-    internal record DataTableViewModel
+    internal record DataTableViewModel : BaseViewModel
     {
         public IEnumerable<ColumnViewModel> Columns { get; init; }
         public IEnumerable<IDictionary<string,object>> Data { get; init; }
@@ -16,7 +16,6 @@ namespace Panelak.DataTable
         public List<int> PreviousPages { get; init; }
         public List<int> NextPages { get; init; }
         public string CurrentUrl { get; init; }
-        public string SetUrl { get; init; }
         public int FirstPage { get; init; }
         public int PreviousPage { get; init; }
         public int NextPage { get; init; }

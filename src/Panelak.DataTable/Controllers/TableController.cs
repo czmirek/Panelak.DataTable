@@ -1,5 +1,4 @@
-﻿using HandlebarsDotNet;
-using Microsoft.AspNetCore.Routing;
+﻿using Microsoft.AspNetCore.Routing;
 using Microsoft.Data.Sqlite;
 using SqlKata;
 using SqlKata.Compilers;
@@ -12,20 +11,20 @@ using System.Threading.Tasks;
 
 namespace Panelak.DataTable
 {
-    internal class DataTable
+    internal class TableController : IDataTableController
     {
-        private readonly DataTableConfig config;
-        private readonly DataTableOptions options;
+        private DataTableConfig config;
+        private DataTableOptions options;
         private int rowsPerPage;
         private int currentPage;
 
-        public DataTable(DataTableConfig config, DataTableOptions options)
+        public TableController(DataTableConfig config, DataTableOptions options)
         {
-            this.config = config ?? throw new ArgumentNullException(nameof(config));
-            this.options = options ?? throw new System.ArgumentNullException(nameof(options));
+            this.config = config;
+            this.options = options;
         }
 
-        public async Task<string> RenderAsync()
+        public async Task<BaseViewModel> GetViewModelAsync()
         {
             // prepare data
             rowsPerPage = options.ActiveTabId.HasValue ? config.Tabs[options.ActiveTabId.Value].RowsPerPage : 10;
@@ -36,11 +35,11 @@ namespace Panelak.DataTable
             var query = CreateDataQuery();
             var unfilteredCountQuery = CreateFilteredCountQuery();
             var filteredCountQuery = CreateFilteredCountQuery();
-            
+
             int unfilteredCount = await unfilteredCountQuery.FirstAsync<int>();
             int filteredCount = await filteredCountQuery.FirstAsync<int>();
 
-            
+
             int numberOfPages = (int)Math.Ceiling((double)unfilteredCount / rowsPerPage);
 
             List<int> previousPages = new List<int>();
@@ -63,6 +62,8 @@ namespace Panelak.DataTable
 
             var vm = new DataTableViewModel
             {
+                Config = config,
+                Options = options,
                 Identifier = options.Identifier,
                 UserId = options.UserId,
                 Columns = options.Columns.Select(c => new ColumnViewModel
@@ -82,15 +83,13 @@ namespace Panelak.DataTable
                 PreviousPages = previousPages,
                 NextPages = nextPages,
                 CurrentUrl = options.CurrentUrl.ToString(),
-                SetUrl = options.SetUrl.ToString(),
                 FirstPage = 1,
-                PreviousPage = Math.Max(currentPage - 1,1),
+                PreviousPage = Math.Max(currentPage - 1, 1),
                 NextPage = Math.Min(currentPage + 1, numberOfPages),
                 LastPage = numberOfPages
             };
 
-            var renderer = new HandlebarsRenderer();
-            return renderer.Render(vm);
+            return vm;
         }
 
         private Query CreateDataQuery()
@@ -131,7 +130,5 @@ namespace Panelak.DataTable
             else
                 throw new NotImplementedException($"Unknown connection type {options.DbConnection.GetType().Name}");
         }
-
-
     }
 }

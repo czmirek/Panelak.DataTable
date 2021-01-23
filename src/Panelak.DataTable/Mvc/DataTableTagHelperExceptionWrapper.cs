@@ -49,7 +49,7 @@ namespace Panelak.DataTable
             DataTableConfig config = await db.GetTableConfigAsync(tagHelper.Identifier, tagHelper.UserId);
             DataTableOptions options = optionsProvider.GetOptions(tagHelper.ViewContext.HttpContext.Request, tagHelper);
 
-            DataTable dataTable = new DataTable(config, options);
+            DataTableRouter dataTable = new DataTableRouter(config, options);
             return await dataTable.RenderAsync();
         }
     }

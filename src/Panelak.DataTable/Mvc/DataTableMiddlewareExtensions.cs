@@ -6,7 +6,8 @@ namespace Panelak.DataTable
     {
         public static IApplicationBuilder UsePanelakDataTableEndpoint(this IApplicationBuilder builder)
         {
-            return builder.Map(DataTableRouter.PostPath, (cfg) =>
+            var dtConf = builder.ApplicationServices.GetService(typeof(DataTableLibraryConfiguration)) as DataTableLibraryConfiguration;
+            return builder.Map(dtConf.MiddlewarePath, (cfg) =>
             {
                 cfg.UseMiddleware<DataTableMiddleware>();
             });

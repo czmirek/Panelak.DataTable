@@ -1,23 +1,8 @@
-﻿<ul class="nav nav-tabs">
-  
-    {{#each Tabs}}
-        <li class="nav-item">
-            <a class="nav-link {{#if this.Active}}active{{/if}}" href="{{this.Href}}">{{this.Caption}}</a>
-        </li>
-    {{else}}
-        <li class="nav-item">
-          <a class="nav-link active" href="#">Výchozí</a>
-        </li>
-    {{/each}}
-  
-  <li class="nav-item">
-    <a class="nav-link" href="{{list_tabs_link}}">➕</a>
-  </li>
-</ul>
+﻿{{> TabHeader}}
 <div class="tab-content">
     <div class="tab-pane show active">
         <div class="card" style="border-top:none;border-radius:0;">
-            <div class="card-body table-responsive ">
+            <div class="card-body table-responsive">
                 <span class="badge badge-primary">Celkem řádků: {{ FilteredCount }}</span>
                 {{#if IsEmpty}}
                     <div class="alert alert-secondary m-0">

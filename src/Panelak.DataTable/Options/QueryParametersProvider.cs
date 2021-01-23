@@ -5,17 +5,21 @@ namespace Panelak.DataTable
 {
     internal class UrlQueryOptionsProvider : IDataTableOptionsProvider
     {
+        private readonly DataTableLibraryConfiguration libConfig;
+
+        public UrlQueryOptionsProvider(DataTableLibraryConfiguration libConfig)
+        {
+            this.libConfig = libConfig ?? throw new ArgumentNullException(nameof(libConfig));
+        }
         public DataTableOptions GetOptions(HttpRequest request, IDataTablePlacement placement)
         {
-            var keys = new UrlQueryKeys();
             Uri currentUri = new Uri(Microsoft.AspNetCore.Http.Extensions.UriHelper.GetDisplayUrl(request));
             UriBuilder uriBuilder = new UriBuilder(currentUri)
             {
-                Path = DataTableRouter.PostPath,
+                Path = libConfig.MiddlewarePath,
                 Query = "",
                 Fragment = "",
             };
-            Uri setUri = uriBuilder.Uri;
             
             return new DataTableOptions
             {
@@ -28,9 +32,8 @@ namespace Panelak.DataTable
                 DbConnection = placement.SourceConnection,
                 Language = placement.Language,
                 CurrentUrl = currentUri,
-                CurrentPage = keys.TryGetPage(request),
-                SetUrl = setUri,
-                Mode = keys.TryGetMode()
+                CurrentPage = request.TryGetPage(),
+                Mode = request.TryGetMode() ?? DataTableMode.Table
             };
         }
     }

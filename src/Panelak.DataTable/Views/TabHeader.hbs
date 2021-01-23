@@ -1,0 +1,15 @@
+﻿<ul class="nav nav-tabs">
+    {{#each Tabs}}
+        <li class="nav-item">
+            <a class="nav-link {{#if this.Active}}active{{/if}}" href="{{this.Href}}">{{this.Caption}}</a>
+        </li>
+    {{else}}
+        <li class="nav-item">
+          <a class="nav-link active" href="#">Výchozí</a>
+        </li>
+    {{/each}}
+  
+  <li class="nav-item">
+    <a class="nav-link" href="{{list_tabs_link}}">➕</a>
+  </li>
+</ul>
