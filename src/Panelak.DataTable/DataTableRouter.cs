@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Panelak.DataTable
@@ -24,8 +25,16 @@ namespace Panelak.DataTable
                 _ => throw new NotImplementedException(),
             };
 
-            var vm = await controller.GetViewModelAsync();
-
+            var vm = await controller.GetViewModelAsync() with
+            {
+                Options = options,
+                Config = config,
+                AllowTabs = options.AllowTabs,
+                CurrentUrl = options.CurrentUrl.ToString(),
+                NoTabs = config.Tabs.Any(),
+                Tabs = config.Tabs.Values.ToList()
+            };
+            
             IDataTableRenderer renderer = new HbsRenderer();
             return renderer.Render(vm);
         }

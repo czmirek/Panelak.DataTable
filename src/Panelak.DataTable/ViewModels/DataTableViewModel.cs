@@ -15,15 +15,11 @@ namespace Panelak.DataTable
         public int Pages { get; init; }
         public List<int> PreviousPages { get; init; }
         public List<int> NextPages { get; init; }
-        public string CurrentUrl { get; init; }
         public int FirstPage { get; init; }
         public int PreviousPage { get; init; }
         public int NextPage { get; init; }
         public int LastPage { get; init; }
         public string UserId { get; init; }
         public string Identifier { get; init; }
-        public bool AllowTabs { get; init; }
-        public bool NoTabs { get; init; }
-        public List<DataTableTabConfig> Tabs { get; init; }
     }
 }

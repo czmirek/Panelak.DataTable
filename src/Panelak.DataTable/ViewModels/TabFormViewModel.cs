@@ -1,12 +1,9 @@
-﻿using System.Collections.Generic;
-
-namespace Panelak.DataTable
+﻿namespace Panelak.DataTable
 {
-    internal record TabFormViewModel
+    internal record TabFormViewModel : BaseViewModel
     {
-        public bool AllowTabs { get; init; }
-        public bool NoTabs { get; init; }
-        public List<DataTableTabConfig> Tabs { get; init; }
-        public string CurrentUrl { get; init; }
+        public string Operation { get; init; }
+        public string ReturnUrl { get; init; }
+        public string UserId { get; init; }
     }
 }

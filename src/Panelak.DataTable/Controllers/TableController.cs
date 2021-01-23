@@ -62,8 +62,6 @@ namespace Panelak.DataTable
 
             var vm = new DataTableViewModel
             {
-                Config = config,
-                Options = options,
                 Identifier = options.Identifier,
                 UserId = options.UserId,
                 Columns = options.Columns.Select(c => new ColumnViewModel
@@ -71,9 +69,6 @@ namespace Panelak.DataTable
                     Caption = c.Caption
                 }),
                 Data = tableData,
-                AllowTabs = options.AllowTabs,
-                NoTabs = config.Tabs.Count == 0,
-                Tabs = config.Tabs.Values.ToList(),
                 IsEmpty = !data.Any(),
                 FilteredCount = filteredCount,
                 CurrentPage = currentPage,
@@ -82,7 +77,6 @@ namespace Panelak.DataTable
                 Pages = numberOfPages,
                 PreviousPages = previousPages,
                 NextPages = nextPages,
-                CurrentUrl = options.CurrentUrl.ToString(),
                 FirstPage = 1,
                 PreviousPage = Math.Max(currentPage - 1, 1),
                 NextPage = Math.Min(currentPage + 1, numberOfPages),

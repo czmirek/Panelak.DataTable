@@ -18,11 +18,7 @@ namespace Panelak.DataTable
         {
             var vm = new TabListViewModel
             {
-                Config = config,
-                Options = options,
-                NoTabs = config.Tabs.Count == 0,
-                Tabs = config.Tabs.Values.ToList(),
-                CurrentUrl = options.CurrentUrl.ToString()
+                
             };
 
             return vm;

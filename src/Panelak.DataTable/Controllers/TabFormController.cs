@@ -14,9 +14,12 @@ namespace Panelak.DataTable
             this.options = options;
         }
 
-        public Task<BaseViewModel> GetViewModelAsync()
+        public async Task<BaseViewModel> GetViewModelAsync()
         {
-            throw new NotImplementedException();
+            return new TabFormViewModel
+            {
+                
+            };
         }
     }
 }
