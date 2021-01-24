@@ -31,8 +31,8 @@ namespace Panelak.DataTable
             output.TagMode = TagMode.StartTagAndEndTag;
             output.TagName = "div";
 
-            var wrapper = ViewContext.HttpContext.RequestServices.GetService(typeof(DataTableTagHelperExceptionWrapper)) as DataTableTagHelperExceptionWrapper;
-            string htmlOutput = await wrapper.GetOutputAsync(this, Debug);
+            var exceptionWrapper = ViewContext.HttpContext.RequestServices.GetService(typeof(DataTableTagHelperExceptionWrapper)) as DataTableTagHelperExceptionWrapper;
+            string htmlOutput = await exceptionWrapper.GetOutputAsync(this, Debug);
 
             output.Content.Clear();
             output.Content.AppendHtml(htmlOutput);

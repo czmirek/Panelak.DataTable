@@ -6,54 +6,22 @@ namespace Panelak.DataTable
     public class DataTableMiddleware
     {
         public DataTableMiddleware(RequestDelegate next)
-        {
-
-        }
+        { }
+        
         public async Task Invoke(HttpContext httpContext)
         {
-            var query = httpContext.Request.Query;
-            var repo = httpContext.RequestServices.GetService(typeof(IDataTableRepository)) as IDataTableRepository;
+            var form = httpContext.Request.Form;
+            var serializer = httpContext.RequestServices.GetService(typeof(IPostContextSerializer)) as IPostContextSerializer;
 
-            if(!query.ContainsKey("operation"))
+            if (!form.ContainsKey("postContext"))
             {
                 httpContext.Response.StatusCode = 400;
-                await httpContext.Response.WriteAsync("Missing \"operation\" parameter");
+                await httpContext.Response.WriteAsync("Missing \"postContext\" parameter");
                 return;
             }
 
-            if (!query.ContainsKey("returnUrl"))
-            {
-                httpContext.Response.StatusCode = 400;
-                await httpContext.Response.WriteAsync("Missing \"returnUrl\" parameter");
-                return;
-            }
-
-            if (!query.ContainsKey("userId"))
-            {
-                httpContext.Response.StatusCode = 400;
-                await httpContext.Response.WriteAsync("Missing \"userId\" parameter");
-                return;
-            }
-
-            if (!query.ContainsKey("identifier"))
-            {
-                httpContext.Response.StatusCode = 400;
-                await httpContext.Response.WriteAsync("Missing \"identifier\" parameter");
-                return;
-            }
-
-            string operation = query["operation"];
-            string identifier = query["identifier"];
-            string returnUrl = query["returnUrl"];
-            string userId = query["userId"];
-
-            switch (operation)
-            {
-                default:
-                    httpContext.Response.StatusCode = 400;
-                    await httpContext.Response.WriteAsync($"Invalid operation \"{operation}\"");
-                    break;
-            }
+            PostContext postContext = serializer.Deserialize(form["postContext"].ToString());
+            await httpContext.Response.WriteAsync(postContext.ReturnUrl);
         }
     }
 }

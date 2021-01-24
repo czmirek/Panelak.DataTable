@@ -19,6 +19,7 @@ namespace Panelak.DataTable.WebTest
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddPanelakDataTable();
+            services.AddDataProtection(opts=>opts.ApplicationDiscriminator = "TEST");
             services.AddControllersWithViews();
         }
 

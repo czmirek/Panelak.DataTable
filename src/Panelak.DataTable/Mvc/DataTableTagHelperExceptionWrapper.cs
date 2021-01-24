@@ -1,17 +1,17 @@
-﻿using System;
+﻿using Microsoft.Extensions.DependencyInjection;
 using System.Threading.Tasks;
 
 namespace Panelak.DataTable
 {
     internal class DataTableTagHelperExceptionWrapper
     {
-        private readonly IDataTableOptionsProvider optionsProvider;
-        private readonly IDataTableRepository db;
+        private readonly IDataTableBootstrap bootstrap;
+        private readonly DataTableLibraryConfiguration libConfig;
 
-        public DataTableTagHelperExceptionWrapper(IDataTableOptionsProvider options, IDataTableRepository db)
+        public DataTableTagHelperExceptionWrapper(IDataTableBootstrap bootstrap, DataTableLibraryConfiguration libConfig)
         {
-            this.optionsProvider = options ?? throw new ArgumentNullException(nameof(options));
-            this.db = db ?? throw new ArgumentNullException(nameof(db));
+            this.bootstrap = bootstrap ?? throw new System.ArgumentNullException(nameof(bootstrap));
+            this.libConfig = libConfig ?? throw new System.ArgumentNullException(nameof(libConfig));
         }
 
         internal async Task<string> GetOutputAsync(DataTableTagHelper tagHelper, bool debug = false)
@@ -46,10 +46,8 @@ namespace Panelak.DataTable
 
         private async Task<string> GetOutputPrivateAsync(DataTableTagHelper tagHelper)
         {
-            DataTableConfig config = await db.GetTableConfigAsync(tagHelper.Identifier, tagHelper.UserId);
-            DataTableOptions options = optionsProvider.GetOptions(tagHelper.ViewContext.HttpContext.Request, tagHelper);
-
-            DataTableRouter dataTable = new DataTableRouter(config, options);
+            var sp = bootstrap.GetServiceProvider(libConfig, tagHelper);
+            IDataTableRouter dataTable = sp.GetRequiredService<IDataTableRouter>();
             return await dataTable.RenderAsync();
         }
     }

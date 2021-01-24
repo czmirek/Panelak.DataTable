@@ -21,27 +21,23 @@ namespace Panelak.DataTable
         
         public string Render(BaseViewModel vm)
         {
-            string currentUrl = vm.Options.CurrentUrl.ToString();
-
+            var currentUrl = vm.Options.CurrentUrl;
             var handleBars = Handlebars.Create();
             handleBars.RegisterHelper("list_tabs_link", (writer, context, parameters) =>
             {
-                var uri = new Uri(currentUrl);
-                string fullUrl = uri.AddOrUpdateQueryValue(HttpRequestExtensions.ModeKey, DataTableMode.TabList.ToString());
+                string fullUrl = currentUrl.AddOrUpdateQueryValue(HttpRequestExtensions.ModeKey, DataTableMode.TabList.ToString());
                 writer.WriteSafeString(fullUrl);
             });
             handleBars.RegisterHelper("set_page_link", (writer, context, parameters) =>
             {
                 int page = parameters.At<int>(0);
-                var uri = new Uri(currentUrl);
-                string fullUrl = uri.AddOrUpdateQueryValue(HttpRequestExtensions.PageKey, page.ToString());
+                string fullUrl = currentUrl.AddOrUpdateQueryValue(HttpRequestExtensions.PageKey, page.ToString());
                 writer.WriteSafeString(fullUrl);
             });
 
             handleBars.RegisterHelper("add_tab_link", (writer, context, parameters) =>
             {
-                var uri = new Uri(currentUrl);
-                string fullUrl = uri.AddOrUpdateQueryValue(HttpRequestExtensions.ModeKey, DataTableMode.CreateTab.ToString());
+                string fullUrl = currentUrl.AddOrUpdateQueryValue(HttpRequestExtensions.ModeKey, DataTableMode.CreateTab.ToString());
                 writer.WriteSafeString(fullUrl);
             });
 

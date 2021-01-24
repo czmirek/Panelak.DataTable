@@ -2,8 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
-    <AssemblyVersion>21.1.23.80</AssemblyVersion>
-    <FileVersion>21.1.23.80</FileVersion>
+    <AssemblyVersion>21.1.24.103</AssemblyVersion>
+    <FileVersion>21.1.24.103</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>
@@ -24,6 +24,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="5.0.0" />
     <PackageReference Include="SqlKata" Version="1.1.7" />
     <PackageReference Include="SqlKata.Execution" Version="1.1.7" />
   </ItemGroup>

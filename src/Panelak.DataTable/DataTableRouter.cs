@@ -4,38 +4,33 @@ using System.Threading.Tasks;
 
 namespace Panelak.DataTable
 {
-    internal class DataTableRouter
+    internal class DataTableRouter : IDataTableRouter
     {
-        private readonly DataTableConfig config;
-        private readonly DataTableOptions options;
+        private readonly IPlacementContext context;
+        private readonly IDataTableRenderer renderer;
+        private readonly ControllerFactory controllerFactory;
 
-        public DataTableRouter(DataTableConfig config, DataTableOptions options)
+        public DataTableRouter(IPlacementContext context, IDataTableRenderer renderer, ControllerFactory controllerFactory)
         {
-            this.config = config ?? throw new ArgumentNullException(nameof(config));
-            this.options = options ?? throw new ArgumentNullException(nameof(options));
+            this.context = context ?? throw new ArgumentNullException(nameof(context));
+            this.renderer = renderer ?? throw new ArgumentNullException(nameof(renderer));
+            this.controllerFactory = controllerFactory ?? throw new ArgumentNullException(nameof(controllerFactory));
         }
 
         public async Task<string> RenderAsync()
         {
-            IDataTableController controller = options.Mode switch
-            {
-                DataTableMode.Table => new TableController(config, options),
-                DataTableMode.TabList => new TabListController(config, options),
-                DataTableMode.CreateTab => new TabFormController(config, options),
-                _ => throw new NotImplementedException(),
-            };
-
+            IDataTableController controller = controllerFactory(context.Options.Mode);
+            
             var vm = await controller.GetViewModelAsync() with
             {
-                Options = options,
-                Config = config,
-                AllowTabs = options.AllowTabs,
-                CurrentUrl = options.CurrentUrl.ToString(),
-                NoTabs = config.Tabs.Any(),
-                Tabs = config.Tabs.Values.ToList()
+                Options = context.Options,
+                Config = context.Config,
+                AllowTabs = context.Options.AllowTabs,
+                CurrentUrl = context.Options.CurrentUrl.ToString(),
+                NoTabs = context.Config.Tabs.Any(),
+                Tabs = context.Config.Tabs.Values.ToList()
             };
-            
-            IDataTableRenderer renderer = new HbsRenderer();
+
             return renderer.Render(vm);
         }
     }

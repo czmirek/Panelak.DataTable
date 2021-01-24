@@ -4,6 +4,7 @@ namespace Panelak.DataTable
 {
     internal interface IDataTableController
     {
-        Task<BaseViewModel> GetViewModelAsync();
+        Task<BaseViewModel> GetViewModelAsync(IPlacementContext context);
+        Task PostAsync(PostContext postContext);
     }
 }

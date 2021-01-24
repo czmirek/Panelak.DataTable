@@ -18,10 +18,10 @@ namespace Panelak.DataTable
         private int rowsPerPage;
         private int currentPage;
 
-        public TableController(DataTableConfig config, DataTableOptions options)
+        public TableController(IPlacementContext context)
         {
-            this.config = config;
-            this.options = options;
+            this.config = context.Config;
+            this.options = context.Options;
         }
 
         public async Task<BaseViewModel> GetViewModelAsync()

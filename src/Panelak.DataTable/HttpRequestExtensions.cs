@@ -26,5 +26,10 @@ namespace Panelak.DataTable
 
             return null;
         }
+
+        public static string GetDisplayUrl(this HttpRequest request)
+        {
+            return Microsoft.AspNetCore.Http.Extensions.UriHelper.GetDisplayUrl(request);
+        }
     }
 }
